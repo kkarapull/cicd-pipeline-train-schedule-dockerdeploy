@@ -48,16 +48,16 @@ pipeline {
             steps {
                 input 'Deploy to Production?'
                 milestone(1)
-                withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS=^yK*)0[w')]) {
                     script {
-                        sh "sshpass -p '^yK*)0[w' -v ssh -o StrictHostKeyChecking=no $USERNAME@44.203.9.124 \"docker pull kkarapull/train-schedule:${env.BUILD_NUMBER}\""
+                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@44.203.9.124 \"docker pull kkarapull/train-schedule:${env.BUILD_NUMBER}\""
                         try {
-                            sh "sshpass -p '^yK*)0[w' -v ssh -o StrictHostKeyChecking=no $USERNAME@44.203.9.124 \"docker stop train-schedule\""
-                            sh "sshpass -p '^yK*)0[w' -v ssh -o StrictHostKeyChecking=no $USERNAME@44.203.9.124 \"docker rm train-schedule\""
+                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@44.203.9.124 \"docker stop train-schedule\""
+                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@44.203.9.124 \"docker rm train-schedule\""
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
-                        sh "sshpass -p '^yK*)0[w' -v ssh -o StrictHostKeyChecking=no $USERNAME@44.203.9.124 \"docker run --restart always --name train-schedule -p 8080:8080 -d kkarapull/train-schedule:${env.BUILD_NUMBER}\""
+                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@44.203.9.124 \"docker run --restart always --name train-schedule -p 8080:8080 -d kkarapull/train-schedule:${env.BUILD_NUMBER}\""
                     }
                 }
             }
