@@ -23,15 +23,15 @@ pipeline {
                 script {
                     app = docker.build("kkarapull/train-schedule")
                     app.inside {
-                        sh 'echo $(curl localhost:8080)'
+                        sh 'echo $(curl localhost:8888)'
                     }
                 }
             }
         }
         stage('Push Docker Image') {
-          //  when {
-           //     branch 'example-solution'
-          //  }
+          when {
+                branch 'example-solution'
+           }
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
@@ -42,9 +42,9 @@ pipeline {
             }
         }
         stage('DeployToProduction') {
-           // when {
-             //   branch 'example-solution'
-           // }
+            when {
+                branch 'example-solution'
+            }
             steps {
                 input 'Deploy to Production?'
                 milestone(1)
