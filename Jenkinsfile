@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             when {
-                branch 'master'
+                branch 'example-solution'
             }
             steps {
                 script {
@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Push Docker Image') {
             when {
-                branch 'master'
+                branch 'example-solution'
             }
             steps {
                 script {
@@ -42,7 +42,7 @@ pipeline {
         }
         stage('DeployToProduction') {
             when {
-                branch 'master'
+                branch 'example-solution'
             }
             steps {
                 input 'Deploy to Production?'
