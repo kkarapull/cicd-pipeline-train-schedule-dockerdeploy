@@ -5,6 +5,7 @@ pipeline {
 	// Global tools to be used by the pipeline
      //   maven 'maven3.8.4' 
         jdk 'jdk9' 
+    }
         
     stages {
         stage('Build') {
