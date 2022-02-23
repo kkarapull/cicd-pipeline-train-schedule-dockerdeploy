@@ -15,9 +15,9 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-            when {
-                branch 'example-solution'
-            }
+           // when {
+            //    branch 'example-solution'
+         //   }
             steps {
                 script {
                     app = docker.build("kkarapull/train-schedule")
@@ -28,9 +28,9 @@ pipeline {
             }
         }
         stage('Push Docker Image') {
-            when {
-                branch 'example-solution'
-            }
+          //  when {
+           //     branch 'example-solution'
+          //  }
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
@@ -41,9 +41,9 @@ pipeline {
             }
         }
         stage('DeployToProduction') {
-            when {
-                branch 'example-solution'
-            }
+           // when {
+             //   branch 'example-solution'
+           // }
             steps {
                 input 'Deploy to Production?'
                 milestone(1)
