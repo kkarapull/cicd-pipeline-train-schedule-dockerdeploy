@@ -48,9 +48,9 @@ pipeline {
             steps {
                 input 'Deploy to Production?'
                 milestone(1)
-                withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS=^yK*)0[w')]) {
+                withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
-                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@44.203.9.124 \"docker pull kkarapull/train-schedule:${env.BUILD_NUMBER}\""
+                        sh USERPASS="^yK*)0[w" && sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@44.203.9.124 \"docker pull kkarapull/train-schedule:${env.BUILD_NUMBER}\""
                         try {
                             sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@44.203.9.124 \"docker stop train-schedule\""
                             sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@44.203.9.124 \"docker rm train-schedule\""
